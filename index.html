@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>イーフト情報 | eFootball攻略 & サッカーニュース配信</title>
+  <meta name="description" content="eFootball（イーフト）の最新攻略情報と現実サッカーの移籍・監督ニュースを最速配信。LINE公式アカウントで個別相談も対応中！">
+  <meta name="keywords" content="eFootball, イーフト, 攻略, サッカー, 移籍, ニュース, LINE">
+  <meta property="og:title" content="イーフト情報 | eFootball攻略 & サッカーニュース配信">
+  <meta property="og:description" content="イーフトの攻略情報と現実サッカーニュースを最速で。">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow--green" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow--purple" aria-hidden="true"></div>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header" id="header">
+    <div class="header__inner">
+      <a href="#" class="header__logo">
+        <span class="header__logo-icon">⚽</span>
+        イーフト情報
+      </a>
+      <nav class="header__nav" id="desktopNav">
+        <a href="#features" class="header__nav-link">特徴</a>
+        <a href="#news" class="header__nav-link">ニュース</a>
+        <a href="#line" class="header__nav-link">LINE</a>
+        <a href="#cta" class="header__cta">🟢 友だち追加</a>
+      </nav>
+      <button class="header__menu-btn" id="menuBtn" aria-label="メニューを開く">☰</button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav__close" id="mobileNavClose" aria-label="メニューを閉じる">✕</button>
+    <a href="#features" class="mobile-nav__link">特徴</a>
+    <a href="#news" class="mobile-nav__link">ニュース</a>
+    <a href="#line" class="mobile-nav__link">LINE</a>
+    <a href="#cta" class="btn btn--line">🟢 友だち追加</a>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" id="hero">
+    <div class="hero__bg">
+      <img src="assets/hero_banner.png" alt="eFootball サイバーバナー" width="1920" height="1080">
+    </div>
+    <div class="hero__content">
+      <div class="hero__badge">⚡ 毎日更新中</div>
+      <h1 class="hero__title">
+        イーフト攻略 &<br>
+        <span class="hero__title-gradient">サッカー最新情報</span>を<br>
+        最速キャッチ。
+      </h1>
+      <p class="hero__description">
+        eFootball の選手分析・ガチャ攻略から、現実サッカーの移籍情報・監督人事まで。<br>
+        すべてをひとつのプラットフォームで。
+      </p>
+      <div class="hero__actions">
+        <a href="#cta" class="btn btn--line" id="heroCta">
+          🟢 LINEで友だち追加
+        </a>
+        <a href="#news" class="btn btn--outline">
+          📰 最新ニュースを見る
+        </a>
+      </div>
+      <div class="hero__stats">
+        <div class="hero__stat">
+          <div class="hero__stat-value" id="statFriends">7+</div>
+          <div class="hero__stat-label">LINE 友だち</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-value">毎日</div>
+          <div class="hero__stat-label">情報更新</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-value">無料</div>
+          <div class="hero__stat-label">完全フリー</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FEATURES ==================== -->
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title reveal">4つの強力なコンテンツ</h2>
+      <p class="section-subtitle reveal">イーフト情報は、ゲーム攻略と現実サッカーの両方をカバーする総合情報プラットフォームです。</p>
+      <div class="features__grid">
+        <div class="feature-card reveal">
+          <div class="feature-card__icon feature-card__icon--green">📊</div>
+          <h3 class="feature-card__title">選手ステータス徹底分析</h3>
+          <p class="feature-card__desc">ガチャで引くべき選手の能力値を数値ベースで分かりやすく解説。オフェンスセンス、スピード、キック力など全パラメータを網羅します。</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon feature-card__icon--purple">🎮</div>
+          <h3 class="feature-card__title">初心者サポート & 個別相談</h3>
+          <p class="feature-card__desc">「どのガチャを引くべき？」「メッシ強い？」などの質問にLINEで直接回答。初心者から上級者まで丁寧にサポートします。</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon feature-card__icon--blue">⚽</div>
+          <h3 class="feature-card__title">現実サッカー最新ニュース</h3>
+          <p class="feature-card__desc">移籍情報、監督の就任・解任、注目の試合結果など、現実世界のサッカーニュースをリアルタイムで配信します。</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon feature-card__icon--yellow">🔗</div>
+          <h3 class="feature-card__title">リアル ✕ ゲーム連動考察</h3>
+          <p class="feature-card__desc">現実の移籍や活躍が eFootball にどう影響するかを考察。FPやPOTM情報の予測など、他では読めない独自コンテンツ。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== NEWS ==================== -->
+  <section class="news" id="news">
+    <div class="container">
+      <div class="news__header">
+        <div class="news__header-left">
+          <h2 class="section-title" style="text-align:left; margin-bottom:8px;">最新ニュース</h2>
+          <p class="section-subtitle" style="text-align:left; margin-bottom:0;">サッカー界の最新情報をお届け</p>
+        </div>
+        <button class="news__admin-btn" id="adminToggleBtn">🔑 管理者</button>
+      </div>
+      <div class="news__filters" id="newsFilters">
+        <button class="news__filter-btn news__filter-btn--active" data-category="all">すべて</button>
+        <button class="news__filter-btn" data-category="transfer">移籍</button>
+        <button class="news__filter-btn" data-category="manager">監督</button>
+        <button class="news__filter-btn" data-category="match">試合</button>
+        <button class="news__filter-btn" data-category="efootball">イーフト</button>
+      </div>
+      <div class="news__grid" id="newsGrid">
+        <!-- JS で動的にレンダリング -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LINE PROMO ==================== -->
+  <section class="line-promo" id="line">
+    <div class="container">
+      <div class="line-promo__inner">
+        <div class="line-promo__text reveal">
+          <h2>LINE公式アカウントで<br><span class="hero__title-gradient">もっと深く、もっと速く。</span></h2>
+          <p>イーフト情報のLINE公式アカウントでは、サイトに掲載されるニュースだけでなく、個別の質問・相談にも対応。あなたのイーフトライフを全力サポートします。</p>
+          <ul class="line-promo__features">
+            <li>選手の育成方法や編成相談</li>
+            <li>ガチャのおすすめ度をリアルタイム配信</li>
+            <li>現実サッカーの速報ニュース</li>
+            <li>完全無料・気軽に質問OK</li>
+          </ul>
+          <a href="#cta" class="btn btn--line">🟢 今すぐ友だち追加</a>
+        </div>
+        <div class="chat-mock reveal" id="chatMock">
+          <div class="chat-mock__header">
+            <div class="chat-mock__avatar">情</div>
+            <div>
+              <div class="chat-mock__name">イーフト情報</div>
+              <div class="chat-mock__status">担当者が返信します</div>
+            </div>
+          </div>
+          <div class="chat-mock__body" id="chatBody">
+            <!-- JS でチャットアニメーション -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="cta" id="cta">
+    <div class="container">
+      <div class="cta__box reveal">
+        <h2 class="cta__title">今すぐ<span class="hero__title-gradient">イーフト情報</span>と繋がろう</h2>
+        <p class="cta__desc">LINE友だち追加は完全無料。最新の攻略情報とサッカーニュースを見逃すな！</p>
+        <div class="cta__actions">
+          <a href="https://line.me/" target="_blank" rel="noopener noreferrer" class="btn btn--line" id="ctaLineBtn">
+            🟢 LINEで友だち追加する
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__copy">&copy; 2025 イーフト情報. All rights reserved.</p>
+        <div class="footer__links">
+          <a href="#hero">トップへ</a>
+          <a href="#news">ニュース</a>
+          <a href="#line">LINE</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODALS ==================== -->
+  <!-- Password Modal -->
+  <div class="modal-overlay" id="passwordModal">
+    <div class="modal">
+      <h3 class="modal__title">🔑 管理者パスワード</h3>
+      <div class="modal__field">
+        <label class="modal__label" for="adminPassword">パスワードを入力してください</label>
+        <div class="password-modal__input-wrap">
+          <input type="password" class="modal__input" id="adminPassword" placeholder="パスワード">
+          <button class="btn btn--submit" id="passwordSubmit" style="flex-shrink:0; padding: 12px 24px;">認証</button>
+        </div>
+      </div>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:8px;">※ デフォルトパスワード: <code>admin</code></p>
+      <div class="modal__actions">
+        <button class="btn btn--cancel" id="passwordCancel">キャンセル</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post Modal -->
+  <div class="modal-overlay" id="postModal">
+    <div class="modal">
+      <h3 class="modal__title">📝 ニュースを投稿</h3>
+      <form id="postForm">
+        <div class="modal__field">
+          <label class="modal__label" for="postTitle">タイトル</label>
+          <input type="text" class="modal__input" id="postTitle" placeholder="例：エムバペがレアルへ移籍！" required>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label" for="postCategory">カテゴリ</label>
+          <select class="modal__select" id="postCategory">
+            <option value="transfer">移籍</option>
+            <option value="manager">監督</option>
+            <option value="match">試合</option>
+            <option value="efootball">イーフト</option>
+          </select>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label" for="postBody">本文</label>
+          <textarea class="modal__textarea" id="postBody" placeholder="ニュースの詳細を入力..." required></textarea>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label" for="postImage">画像URL（任意）</label>
+          <input type="url" class="modal__input" id="postImage" placeholder="https://example.com/image.jpg">
+        </div>
+        <div class="modal__actions">
+          <button type="button" class="btn btn--cancel" id="postCancel">キャンセル</button>
+          <button type="submit" class="btn btn--submit">🚀 投稿する</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
