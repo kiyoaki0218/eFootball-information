@@ -115,12 +115,21 @@
     <div class="container">
       <h2 class="section-title reveal">サッカー最新ニュース</h2>
       <p class="section-subtitle reveal">主要サッカーメディアから最新の移籍・試合・監督情報を自動取得して配信中！</p>
+      
+      <!-- 大カテゴリフィルター（国内・海外） -->
+      <div class="news__main-filters reveal" id="newsMainFilters">
+        <button class="news__main-filter-btn news__main-filter-btn--active" data-region="international">海外サッカー</button>
+        <button class="news__main-filter-btn" data-region="domestic">国内サッカー</button>
+      </div>
+
+      <!-- 小カテゴリフィルター（移籍・監督・試合） -->
       <div class="news__filters reveal" id="newsFilters">
         <button class="news__filter-btn news__filter-btn--active" data-category="all">すべて</button>
         <button class="news__filter-btn" data-category="transfer">移籍</button>
         <button class="news__filter-btn" data-category="manager">監督</button>
         <button class="news__filter-btn" data-category="match">試合・その他</button>
       </div>
+
       <div class="news__grid" id="newsGrid">
         <!-- JS でAPI経由で動的にレンダリング -->
         <div class="news__loading">
@@ -194,7 +203,7 @@
     <div class="container">
       <div class="cta__box reveal">
         <h2 class="cta__title">今すぐ<span class="hero__title-gradient">イーフト情報</span>と繋がろう</h2>
-        <p class="cta__desc">LINE友だち追加は完全無料。最新の攻略情報とサッカーニュースを見逃すな！</p>
+        <p class="cta__desc">LINE友だち追加は完全無料。最新 of 攻略情報とサッカーニュースを見逃すな！</p>
         <div class="cta__actions">
           <a href="https://line.me/R/ti/p/@440uhlwg" target="_blank" rel="noopener noreferrer" class="btn btn--line" id="ctaLineBtn">
             &#x1F7E2; LINEで友だち追加する

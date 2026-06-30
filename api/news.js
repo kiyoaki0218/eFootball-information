@@ -1,5 +1,4 @@
 const Parser = require('rss-parser');
-// Add custom headers to act as a browser to avoid 404/403 blocks from media servers
 const parser = new Parser({
   headers: {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -14,31 +13,52 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
-  // Using Google News Search RSS for maximum reliability and uptime.
-  // It searches for soccer news related to transfers, managers, or matches in Japanese.
   const feeds = [
+    // --- 海外サッカーフィード ---
     {
-      name: 'google-news-transfer',
-      url: 'https://news.google.com/rss/search?q=%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC+%E7%A7%BB%E7%B1%8D&hl=ja&gl=JP&ceid=JP:ja',
+      name: 'intl-transfer',
+      url: 'https://news.google.com/rss/search?q=%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC+%E6%B5%B7%E5%A4%96+%E7%A7%BB%E7%B1%8D&hl=ja&gl=JP&ceid=JP:ja',
       defaultCategory: 'transfer',
-      sourceName: 'Googleニュース (移籍)'
+      region: 'international',
+      sourceName: '海外移籍'
     },
     {
-      name: 'google-news-manager',
-      url: 'https://news.google.com/rss/search?q=%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC+%E7%9B%A3%E7%9D%A3&hl=ja&gl=JP&ceid=JP:ja',
+      name: 'intl-manager',
+      url: 'https://news.google.com/rss/search?q=%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC+%E6%B5%B7%E5%A4%96+%E7%9B%A3%E7%9D%A3&hl=ja&gl=JP&ceid=JP:ja',
       defaultCategory: 'manager',
-      sourceName: 'Googleニュース (監督)'
+      region: 'international',
+      sourceName: '海外監督'
     },
     {
-      name: 'google-news-match',
-      url: 'https://news.google.com/rss/search?q=%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC+%E8%A9%A6%E5%90%88&hl=ja&gl=JP&ceid=JP:ja',
+      name: 'intl-match',
+      url: 'https://news.google.com/rss/search?q=%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC+%E6%B5%B7%E5%A4%96+%E8%A9%A6%E5%90%88&hl=ja&gl=JP&ceid=JP:ja',
       defaultCategory: 'match',
-      sourceName: 'Googleニュース (試合)'
+      region: 'international',
+      sourceName: '海外試合'
+    },
+    // --- 国内サッカーフィード ---
+    {
+      name: 'dom-transfer',
+      url: 'https://news.google.com/rss/search?q=%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC+J%E3%83%AA%E3%83%BC%E3%82%B0+%E7%A7%BB%E7%B1%8D&hl=ja&gl=JP&ceid=JP:ja',
+      defaultCategory: 'transfer',
+      region: 'domestic',
+      sourceName: '国内移籍'
+    },
+    {
+      name: 'dom-manager',
+      url: 'https://news.google.com/rss/search?q=%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC+J%E3%83%AA%E3%83%BC%E3%82%B0+%E7%9B%A3%E7%9D%A3&hl=ja&gl=JP&ceid=JP:ja',
+      defaultCategory: 'manager',
+      region: 'domestic',
+      sourceName: '国内監督'
+    },
+    {
+      name: 'dom-match',
+      url: 'https://news.google.com/rss/search?q=%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC+%E6%97%A5%E6%9C%AC%E4%BB%A3%E8%A1%A8+%E8%A9%A6%E5%90%88&hl=ja&gl=JP&ceid=JP:ja',
+      defaultCategory: 'match',
+      region: 'domestic',
+      sourceName: '国内試合'
     }
   ];
-
-  // Fix manager URL encoding (監督 in utf-8 hex is %E7%9B%A3%E7%6D%63 -> wait, %E7%9B%A3%E7%9D%A3 is 監督)
-  // Let's replace the string in post-processing to ensure correct encoding.
 
   try {
     const allItems = [];
@@ -76,7 +96,8 @@ module.exports = async (req, res) => {
             link: item.link,
             pubDate: item.pubDate || item.isoDate,
             source: source,
-            category: category
+            category: category,
+            region: feed.region
           });
         });
       } catch (e) {
@@ -97,8 +118,8 @@ module.exports = async (req, res) => {
       }
     }
 
-    // Limit to 12 items
-    const limitedItems = uniqueItems.slice(0, 12);
+    // Limit to 24 items total (frontend will filter these, so we need a larger pool than 12)
+    const limitedItems = uniqueItems.slice(0, 30);
 
     res.status(200).json(limitedItems);
   } catch (error) {

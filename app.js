@@ -7,10 +7,12 @@
   var mobileNavClose = document.getElementById('mobileNavClose');
   var chatBody = document.getElementById('chatBody');
   var newsGrid = document.getElementById('newsGrid');
+  var newsMainFilters = document.getElementById('newsMainFilters');
   var newsFilters = document.getElementById('newsFilters');
 
   var allNews = [];
-  var currentFilter = 'all';
+  var currentRegion = 'international'; // Default: International
+  var currentFilter = 'all';          // Default: All (Transfer/Manager/Match)
 
   function init() {
     initHeader();
@@ -62,12 +64,12 @@
     }
   }
 
-  // Fetch News from Vercel Serverless API
+  // Fetch News from Serverless API
   function fetchNews() {
     if (!newsGrid) return;
     fetch('/api/news')
       .then(function(res) {
-        if (!res.ok) throw new Error('Network response was not ok');
+        if (!res.ok) throw new Error('Network error');
         return res.json();
       })
       .then(function(data) {
@@ -84,17 +86,23 @@
   function renderNews() {
     if (!newsGrid) return;
     
-    // Filter logic
-    var filtered = allNews;
-    if (currentFilter !== 'all') {
-      filtered = allNews.filter(function(item) {
-        // match category maps to 'match' or others
+    // Double filtering logic
+    var filtered = allNews.filter(function(item) {
+      // 1. Region Filter (domestic / international)
+      if (item.region !== currentRegion) {
+        return false;
+      }
+      
+      // 2. Category Filter (all / transfer / manager / match)
+      if (currentFilter !== 'all') {
         if (currentFilter === 'match') {
           return item.category === 'match' || item.category === 'efootball';
         }
         return item.category === currentFilter;
-      });
-    }
+      }
+      
+      return true;
+    });
 
     if (filtered.length === 0) {
       newsGrid.innerHTML = '<div class="news__error"><p>\u8A72\u5F53\u3059\u308B\u30CB\u30E5\u30FC\u30B9\u304C\u3042\u308A\u307E\u305B\u3093\u3002</p></div>';
@@ -150,20 +158,39 @@
   }
 
   function initFilters() {
-    if (!newsFilters) return;
-    newsFilters.addEventListener('click', function(e) {
-      var btn = e.target.closest('.news__filter-btn');
-      if (!btn) return;
+    // 1. Parent (Region) Filter Events
+    if (newsMainFilters) {
+      newsMainFilters.addEventListener('click', function(e) {
+        var btn = e.target.closest('.news__main-filter-btn');
+        if (!btn) return;
 
-      var buttons = newsFilters.querySelectorAll('.news__filter-btn');
-      for (var i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove('news__filter-btn--active');
-      }
-      btn.classList.add('news__filter-btn--active');
+        var buttons = newsMainFilters.querySelectorAll('.news__main-filter-btn');
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].classList.remove('news__main-filter-btn--active');
+        }
+        btn.classList.add('news__main-filter-btn--active');
 
-      currentFilter = btn.getAttribute('data-category');
-      renderNews();
-    });
+        currentRegion = btn.getAttribute('data-region');
+        renderNews();
+      });
+    }
+
+    // 2. Child (Category) Filter Events
+    if (newsFilters) {
+      newsFilters.addEventListener('click', function(e) {
+        var btn = e.target.closest('.news__filter-btn');
+        if (!btn) return;
+
+        var buttons = newsFilters.querySelectorAll('.news__filter-btn');
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].classList.remove('news__filter-btn--active');
+        }
+        btn.classList.add('news__filter-btn--active');
+
+        currentFilter = btn.getAttribute('data-category');
+        renderNews();
+      });
+    }
   }
 
   function escapeHtml(str) {
