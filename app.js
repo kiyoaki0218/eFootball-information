@@ -6,12 +6,18 @@
   var mobileNav = document.getElementById('mobileNav');
   var mobileNavClose = document.getElementById('mobileNavClose');
   var chatBody = document.getElementById('chatBody');
+  var newsGrid = document.getElementById('newsGrid');
+  var newsFilters = document.getElementById('newsFilters');
+
+  var allNews = [];
+  var currentFilter = 'all';
 
   function init() {
     initHeader();
     initMobileNav();
     initScrollReveal();
     initChatAnimation();
+    fetchNews();
   }
 
   function initHeader() {
@@ -56,17 +62,130 @@
     }
   }
 
+  // Fetch News from Vercel Serverless API
+  function fetchNews() {
+    if (!newsGrid) return;
+    fetch('/api/news')
+      .then(function(res) {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.json();
+      })
+      .then(function(data) {
+        allNews = data;
+        renderNews();
+        initFilters();
+      })
+      .catch(function(err) {
+        console.error('Fetch error:', err);
+        newsGrid.innerHTML = '<div class="news__error"><p>\u6700\u65B0\u30CB\u30E5\u30FC\u30B9\u306E\u53D6\u5F97\u306B\u5931\u6557\u3057\u307E\u3057\u305F\u3002\u3057\u3070\u3089\u304F\u7D4C\u3063\u3066\u304B\u3089\u518D\u5EA6\u304A\u8A66\u3057\u304F\u3060\u3055\u3044\u3002</p></div>';
+      });
+  }
+
+  function renderNews() {
+    if (!newsGrid) return;
+    
+    // Filter logic
+    var filtered = allNews;
+    if (currentFilter !== 'all') {
+      filtered = allNews.filter(function(item) {
+        // match category maps to 'match' or others
+        if (currentFilter === 'match') {
+          return item.category === 'match' || item.category === 'efootball';
+        }
+        return item.category === currentFilter;
+      });
+    }
+
+    if (filtered.length === 0) {
+      newsGrid.innerHTML = '<div class="news__error"><p>\u8A72\u5F53\u3059\u308B\u30CB\u30E5\u30FC\u30B9\u304C\u3042\u308A\u307E\u305B\u3093\u3002</p></div>';
+      return;
+    }
+
+    var categoryLabels = {
+      transfer: '\u79FB\u7C4D',
+      manager: '\u76E3\u7763',
+      match: '\u8A66\u5408',
+      efootball: '\u30A4\u30FC\u30D5\u30C8'
+    };
+
+    var html = filtered.map(function(item, index) {
+      var categoryClass = item.category || 'match';
+      var label = categoryLabels[item.category] || '\u305D\u306E\u4ED6';
+      var icon = '⚽';
+      if (item.category === 'transfer') icon = '🔄';
+      else if (item.category === 'manager') icon = '👔';
+      else if (item.category === 'efootball') icon = '🎮';
+
+      // Format date (yyyy-mm-dd)
+      var dateStr = '';
+      if (item.pubDate) {
+        var d = new Date(item.pubDate);
+        if (!isNaN(d.getTime())) {
+          var y = d.getFullYear();
+          var m = ('0' + (d.getMonth() + 1)).slice(-2);
+          var date = ('0' + d.getDate()).slice(-2);
+          dateStr = y + '-' + m + '-' + date;
+        }
+      }
+
+      return '<article class="news-card" style="animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: ' + (index * 0.05) + 's">' +
+        '<div class="news-card__icon-header">' + icon + '</div>' +
+        '<div class="news-card__body">' +
+          '<div class="news-card__meta-top">' +
+            '<span class="news-card__category news-card__category--' + categoryClass + '">' + label + '</span>' +
+            '<span class="news-card__source">' + escapeHtml(item.source) + '</span>' +
+          '</div>' +
+          '<h3 class="news-card__title">' + escapeHtml(item.title) + '</h3>' +
+          '<div class="news-card__link-wrap">' +
+            '<span class="news-card__date">📅 ' + dateStr + '</span>' +
+            '<a href="' + escapeHtml(item.link) + '" target="_blank" rel="noopener noreferrer" class="news-card__btn">' +
+              '\u8A73\u7D30\u3092\u898B\u308B <span style="font-size:0.75rem;">↗</span>' +
+            '</a>' +
+          '</div>' +
+        '</div>' +
+      '</article>';
+    }).join('');
+
+    newsGrid.innerHTML = html;
+  }
+
+  function initFilters() {
+    if (!newsFilters) return;
+    newsFilters.addEventListener('click', function(e) {
+      var btn = e.target.closest('.news__filter-btn');
+      if (!btn) return;
+
+      var buttons = newsFilters.querySelectorAll('.news__filter-btn');
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('news__filter-btn--active');
+      }
+      btn.classList.add('news__filter-btn--active');
+
+      currentFilter = btn.getAttribute('data-category');
+      renderNews();
+    });
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;')
+              .replace(/'/g, '&#039;');
+  }
+
   function initChatAnimation() {
     var messages = [
-      { type: 'right', text: '\u30E1\u30C3\u30B7\u5F37\u3044\uFF1F', delay: 600 },
+      { type: 'right', text: 'メッシ強い？', delay: 600 },
       { type: 'typing', delay: 1200 },
-      { type: 'left', text: '\u30E1\u30C3\u30B7\u306F\u653B\u6483\u9762\u306E\u30B9\u30C6\u30FC\u30BF\u30B9\u304C\u975E\u5E38\u306B\u512A\u79C0\u3067\u3059\uFF01\u7279\u306B\u30D1\u30B9\u30FB\u30C9\u30EA\u30D6\u30EB\u7CFB\u306F\u5727\u5012\u7684\u3067\u3059\u3088 \uD83D\uDD25', delay: 2000 },
-      { type: 'right', text: '\u3069\u306E\u30AC\u30C1\u30E3\u5F15\u3051\u3070\u3044\u3044\uFF1F', delay: 3500 },
+      { type: 'left', text: 'メッシは攻撃面のステータスが非常に優秀です！特にパス・ドリブル系は圧倒的ですよ 🔥', delay: 2000 },
+      { type: 'right', text: 'どのガチャ引けばいい？', delay: 3500 },
       { type: 'typing', delay: 4200 },
-      { type: 'left', text: '\u521D\u5FC3\u8005\u306F\u901A\u5E38\u9078\u624B\u3092\u96C6\u3081\u3064\u3064\u3001\u7DD1\u8272\u306E\u67A0\u306E\u9031\u9593FP\u30AC\u30C1\u30E3\u3092\u5F15\u304F\u306E\u304C\u304A\u3059\u3059\u3081\u3067\u3059\uFF01\u30B3\u30B9\u30D1\u6700\u5F37\uD83D\uDCAA', delay: 5200 },
-      { type: 'right', text: '\u30A8\u30F3\u30C9\u30EA\u30C3\u30AD\u3063\u3066\u30A4\u30FC\u30D5\u30C8\u306B\u6765\u308B\uFF1F', delay: 7000 },
+      { type: 'left', text: '初心者は通常選手を集めつつ、緑色の枠の週間FPガチャを引くのがおすすめです！コスパ最強💪', delay: 5200 },
+      { type: 'right', text: 'エンドリッキってイーフトに来る？', delay: 7000 },
       { type: 'typing', delay: 7600 },
-      { type: 'left', text: '\u30EA\u30E8\u30F3\u3078\u306E\u79FB\u7C4D\u304C\u6C7A\u5B9A\u3057\u305F\u306E\u3067\u3001FP\u5316\u306E\u53EF\u80FD\u6027\u5927\u3067\u3059\uFF01\u8981\u30C1\u30A7\u30C3\u30AF\u26A1', delay: 8600 }
+      { type: 'left', text: 'リヨンへの移籍が決定したので、FP化の可能性大です！要チェック⚡', delay: 8600 }
     ];
 
     var observer = new IntersectionObserver(function(entries) {
@@ -83,6 +202,7 @@
   }
 
   function playChat(messages) {
+    if (!chatBody) return;
     chatBody.innerHTML = '';
     messages.forEach(function(msg) {
       setTimeout(function() {

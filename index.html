@@ -23,8 +23,9 @@
       </a>
       <nav class="header__nav" id="desktopNav">
         <a href="#features" class="header__nav-link">特徴</a>
-        <a href="#voom" class="header__nav-link">ニュース</a>
-        <a href="#line" class="header__nav-link">LINE</a>
+        <a href="#news" class="header__nav-link">ニュース</a>
+        <a href="#voom" class="header__nav-link">LINE VOOM</a>
+        <a href="#line" class="header__nav-link">LINE相談</a>
         <a href="https://line.me/R/ti/p/@440uhlwg" target="_blank" rel="noopener noreferrer" class="header__cta">&#x1F7E2; 友だち追加</a>
       </nav>
       <button class="header__menu-btn" id="menuBtn" aria-label="メニューを開く">&#x2630;</button>
@@ -34,8 +35,9 @@
   <div class="mobile-nav" id="mobileNav">
     <button class="mobile-nav__close" id="mobileNavClose" aria-label="メニューを閉じる">&#x2715;</button>
     <a href="#features" class="mobile-nav__link">特徴</a>
-    <a href="#voom" class="mobile-nav__link">ニュース</a>
-    <a href="#line" class="mobile-nav__link">LINE</a>
+    <a href="#news" class="mobile-nav__link">ニュース</a>
+    <a href="#voom" class="mobile-nav__link">LINE VOOM</a>
+    <a href="#line" class="mobile-nav__link">LINE相談</a>
     <a href="https://line.me/R/ti/p/@440uhlwg" target="_blank" rel="noopener noreferrer" class="btn btn--line">&#x1F7E2; 友だち追加</a>
   </div>
 
@@ -58,7 +60,7 @@
         <a href="https://line.me/R/ti/p/@440uhlwg" target="_blank" rel="noopener noreferrer" class="btn btn--line" id="heroCta">
           &#x1F7E2; LINEで友だち追加
         </a>
-        <a href="#voom" class="btn btn--outline">
+        <a href="#news" class="btn btn--outline">
           &#x1F4F0; 最新ニュースを見る
         </a>
       </div>
@@ -108,35 +110,52 @@
     </div>
   </section>
 
+  <!-- ==================== REALTIME FOOTBALL NEWS ==================== -->
+  <section class="news" id="news">
+    <div class="container">
+      <h2 class="section-title reveal">サッカー最新ニュース</h2>
+      <p class="section-subtitle reveal">主要サッカーメディアから最新の移籍・試合・監督情報を自動取得して配信中！</p>
+      <div class="news__filters reveal" id="newsFilters">
+        <button class="news__filter-btn news__filter-btn--active" data-category="all">すべて</button>
+        <button class="news__filter-btn" data-category="transfer">移籍</button>
+        <button class="news__filter-btn" data-category="manager">監督</button>
+        <button class="news__filter-btn" data-category="match">試合・その他</button>
+      </div>
+      <div class="news__grid" id="newsGrid">
+        <!-- JS でAPI経由で動的にレンダリング -->
+        <div class="news__loading">
+          <div class="news__spinner"></div>
+          <p>最新ニュースを取得中...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LINE VOOM ==================== -->
   <section class="voom" id="voom">
     <div class="container">
-      <h2 class="section-title reveal">最新ニュース</h2>
-      <p class="section-subtitle reveal">LINE VOOMで最新の移籍・監督・試合情報を配信中！</p>
+      <h2 class="section-title reveal">公式LINE VOOM</h2>
+      <p class="section-subtitle reveal">LINE VOOMでもイーフト攻略情報を更新中！</p>
       <div class="voom__grid reveal">
         <div class="voom-card">
           <div class="voom-card__icon">&#x1F504;</div>
-          <h3 class="voom-card__title">移籍情報</h3>
-          <p class="voom-card__desc">世界中のビッグクラブの移籍情報をいち早くお届け。注目選手の動向をリアルタイムで。</p>
+          <h3 class="voom-card__title">移籍速報</h3>
+          <p class="voom-card__desc">注目選手の移籍動向とイーフトでの能力変更予想を解説。</p>
         </div>
         <div class="voom-card">
           <div class="voom-card__icon">&#x1F454;</div>
-          <h3 class="voom-card__title">監督人事</h3>
-          <p class="voom-card__desc">各クラブ of 監督就任・解任情報。次期監督候補の予想も。</p>
-        </div>
-        <div class="voom-card">
-          <div class="voom-card__icon">&#x26BD;</div>
-          <h3 class="voom-card__title">試合速報</h3>
-          <p class="voom-card__desc">注目の試合結果やハイライト情報をピックアップ。</p>
+          <h3 class="voom-card__title">新監督予想</h3>
+          <p class="voom-card__desc">新監督就任によるフォーメーションや戦術変更の予測。</p>
         </div>
         <div class="voom-card">
           <div class="voom-card__icon">&#x1F3AE;</div>
-          <h3 class="voom-card__title">イーフト攻略</h3>
-          <p class="voom-card__desc">FP・POTM情報の予測や、おすすめガチャ情報をリアルタイムで。</p>
+          <h3 class="voom-card__title">ガチャ評価</h3>
+          <p class="voom-card__desc">毎週登場する週間FPやPOTMガチャの引くべき度を評価。</p>
         </div>
       </div>
       <div class="voom__cta reveal">
         <a href="https://linevoom.line.me/user/_dfBxqrsgYXwzsla5KyZwT_EI9Jvm0U0zaIPEUPw" target="_blank" rel="noopener noreferrer" class="btn btn--line btn--large">
-          &#x1F7E2; LINE VOOMで最新ニュースをチェック
+          &#x1F7E2; LINE VOOMで最新投稿をチェック
         </a>
         <p class="voom__hint">上記リンクから最新投稿を直接ご覧いただけます</p>
       </div>
@@ -191,7 +210,8 @@
         <p class="footer__copy">&copy; 2025 イーフト情報. All rights reserved.</p>
         <div class="footer__links">
           <a href="#hero">トップへ</a>
-          <a href="#voom">ニュース</a>
+          <a href="#news">ニュース</a>
+          <a href="#voom">LINE VOOM</a>
           <a href="#line">LINE</a>
         </div>
       </div>
